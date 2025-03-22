@@ -27,34 +27,36 @@ print("hi")
 -- 	io.write("incorrect.")
 -- end
 
-Object = {}
+HeroConstructor = {}
 
-function Object:new ()
-	local m = {}
-	m.staticField1 = "static field"
-	m.staticField2 = "static field"
-	m.announce = function ()
-		print("hello from the object prototype")
+function HeroConstructor:new (name, class, hp)
+
+	local privateTable = {name = name, class = class, hp = hp}
+
+	setmetatable(privateTable, self)
+	self.__index = self
+
+	self.attack = function (target, damage)
+		target.hp = target.hp - damage
 	end
-	m.add = function (a, b)
-		print(a + b)
-	end
-	setmetatable(m, self)
-	self.__index = m
-	return m
+
+	return privateTable
 end
 
-function Object:add (a, b)
-	print(a + b)
+function HeroConstructor:add (a, b) --static method?
+	-- print(a + b)
 	return tostring(a + b)
 end
 
 
-M = Object:new()
---assert(getmetatable(M) ~= Object) --fails
-assert(getmetatable(M) == Object) --succeeds
-Object:add(2, 4)
-print(M.add(2, 5))
+local etrigan = HeroConstructor:new("Etrigan", "Warrior", 100)
+local balor = HeroConstructor:new("Balor", "Warrior", 100)
+balor.attack(etrigan, 50)
+io.write("Name: ", etrigan.name, "; Health: ", etrigan.hp, "; Class: ", etrigan.class, "\n")
+-- assert(getmetatable(M) ~= Object) --fails
+-- assert(getmetatable(constructor1_1) == Constructor1) --fails
+io.write(HeroConstructor:add(2, 4))
+print(HeroConstructor.undefinedVariable)
 
 
 
