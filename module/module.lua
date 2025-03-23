@@ -42,3 +42,15 @@ farewell.farewell() --5, prints the farewell function defined in the farewell/sa
 print(ref) --6, nil
 -- ref is a global defined in noref.lua, which had not been
 -- required
+
+print(package.loaded["module.farewell.saygoodbye"]) -- 6, returns table at memory location
+print(farewell) --7, returns the same memory location
+
+
+package.loaded["module.farewell.saygoodbye"].farewell() --8, prints bye
+print(package.loaded["module.farewell.saygoodbye"].Test) --9, nil
+print(Test) --10, prints test
+--[[ 
+-- so, Test can only be accessed if the file gets required
+-- but is not part of the package that's imported?
+--]]
