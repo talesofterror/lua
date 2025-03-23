@@ -3,6 +3,12 @@ T1 = {}
 function T1.new (self, name, age)
 	local t = {name = name, age = age}
 	setmetatable(t, {__index = self})
+	PrintClassSelf = function (_self)
+		print(_self)
+	end
+	t.printReturnedSelf = function (_self)
+		print(_self)
+	end
 	return t
 end
 
@@ -23,4 +29,6 @@ t1.__index = t1
 
 print(t1.name) --3, bob
 print(t1.__index.name) --4, bob
+
+T1.PrintClassSelf(t1) --5
 
