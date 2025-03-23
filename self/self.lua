@@ -3,8 +3,8 @@ T1 = {}
 function T1.new (self, name, age)
 	local t = {name = name, age = age}
 	setmetatable(t, {__index = self})
-	PrintClassSelf = function (_self)
-		print(_self)
+	PrintClassSelf = function (s)
+		print(s)
 	end
 	t.printReturnedSelf = function (_self)
 		print(_self)
@@ -30,5 +30,17 @@ t1.__index = t1
 print(t1.name) --3, bob
 print(t1.__index.name) --4, bob
 
-T1.PrintClassSelf(t1) --5
+-- T1.PrintClassSelf(T1) --5, error, attempt to call nil value
+t1.printReturnedSelf(t1) --6, prints table: <memory location>
+print(t1) -- 7, prints same memory location as directly above
+t1.printReturnedSelf(T1) --8, print memory location of T1
+print(T1) --9, prints memory location of T1
+
+local t2 = T1.new(t2, "john", 40)
+
+print(t2.name) --10, john
+
+local t3 = T1.new(t2, "sam", 60)
+
+print(t3.name) --11, sam
 
