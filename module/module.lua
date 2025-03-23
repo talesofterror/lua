@@ -33,8 +33,12 @@ print(nothingReturned) --3, returns true (?) maybe because the file exists?
 -- local requireObject2 = require({name = "bob"}) -- warning, cannot assign table to parameter string
 -- error when running, string expected
 -- print(requireObject2.name) -- can't
+print(ret) --4, prints "return". ret was defined as global var in noreturn.lua
 
 local farewell = require("module.farewell.saygoodbye")
 
-farewell.farewell() --4, prints the farewell function defined in the farewell/saygoodbye.lua file
+farewell.farewell() --5, prints the farewell function defined in the farewell/saygoodbye.lua file
 
+print(ref) --6, nil
+-- ref is a global defined in noref.lua, which had not been
+-- required
